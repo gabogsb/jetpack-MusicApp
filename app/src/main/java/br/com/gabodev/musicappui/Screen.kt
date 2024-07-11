@@ -12,17 +12,19 @@ sealed class Screen(
     val dRoute: String,
     @DrawableRes val icon: Int
   ) : Screen(dTitle, dRoute) {
-    object Account: DrawerScreen(
+    object Account : DrawerScreen(
       "Account",
       "account",
       R.drawable.baseline_account_box_24
     )
-    object Subscription: DrawerScreen(
+
+    object Subscription : DrawerScreen(
       "Subscription",
       "subscription",
       R.drawable.baseline_library_music_24
     )
-    object AddAccount: DrawerScreen(
+
+    object AddAccount : DrawerScreen(
       "Add Account",
       "add_account",
       R.drawable.baseline_person_add_alt_1_24
@@ -30,3 +32,9 @@ sealed class Screen(
   }
 
 }
+
+val screensInDrawer = listOf(
+  Screen.DrawerScreen.Account,
+  Screen.DrawerScreen.Subscription,
+  Screen.DrawerScreen.AddAccount
+)
