@@ -33,6 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import br.com.gabodev.musicappui.AccountDialog
 import br.com.gabodev.musicappui.MainViewModel
 import br.com.gabodev.musicappui.Navigation
 import br.com.gabodev.musicappui.Screen
@@ -64,6 +65,10 @@ fun MainView(
     mutableStateOf(currentScreen.title)
   }
 
+  val dialogOpen = remember {
+    mutableStateOf(false)
+  }
+
 
   Scaffold(
     topBar = {
@@ -92,6 +97,7 @@ fun MainView(
             }
             if (item.dRoute == "add_account"){
               //TODO Add Account open dialog
+              dialogOpen.value = true
             } else {
               controller.navigate(item.route)
               title.value = item.dTitle
@@ -103,6 +109,7 @@ fun MainView(
     }
   ) {
     Navigation(controller, viewModel, it)
+    AccountDialog(dialogOpen = dialogOpen)
   }
 
 }
