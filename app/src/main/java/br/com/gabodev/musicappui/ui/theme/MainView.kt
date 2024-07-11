@@ -29,9 +29,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import br.com.gabodev.musicappui.MainViewModel
+import br.com.gabodev.musicappui.Navigation
 import br.com.gabodev.musicappui.Screen
 import br.com.gabodev.musicappui.screensInDrawer
 import kotlinx.coroutines.CoroutineScope
@@ -46,13 +49,19 @@ fun MainView(
   val scaffoldState: ScaffoldState = rememberScaffoldState()
   val scope: CoroutineScope = rememberCoroutineScope()
 
+  val viewModel: MainViewModel = viewModel()
+
   //find to veiew
   val controller: NavController = rememberNavController()
   val navBackStackEntry by controller.currentBackStackEntryAsState()
   val currentRoute = navBackStackEntry?.destination?.route
 
+  val currentScreen = remember {
+    viewModel.currentScreen.value
+  }
+
   val title = remember {
-    mutableStateOf("")
+    mutableStateOf(currentScreen.title)
   }
 
 
@@ -74,7 +83,7 @@ fun MainView(
     scaffoldState = scaffoldState,
     drawerContent = {
       LazyColumn(
-        modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
+        modifier = Modifier.padding(vertical = 24.dp, horizontal = 8.dp)
       ) {
         items(screensInDrawer){ item ->
           DrawerItem(item = item, selected = currentRoute == item.route) {
@@ -93,7 +102,7 @@ fun MainView(
       }
     }
   ) {
-    Text(text = "Main View", modifier = modifier.padding(it))
+    Navigation(controller, viewModel, it)
   }
 
 }
@@ -110,7 +119,7 @@ fun DrawerItem(
   Row(
     modifier = Modifier
       .fillMaxWidth()
-      .padding(8.dp)
+      .padding(12.dp)
       .background(background)
       .clickable {
         onDrawerItemClick()
