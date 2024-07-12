@@ -75,6 +75,4 @@ fun AccountDialog(
       )
     )
   }
-
-
 }

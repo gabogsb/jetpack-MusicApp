@@ -11,7 +11,7 @@ class MainViewModel : ViewModel() {
   val currentScreen: MutableState<Screen>
     get() = _currentScreen
 
-  fun setCurrenteScreen(screen: Screen) {
+  fun setCurrentScreen(screen: Screen) {
     _currentScreen.value = screen
   }
 
